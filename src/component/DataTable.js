@@ -5,15 +5,13 @@ import { reducer } from './reducer'
 import { useReducer } from 'react'
 import axios from 'axios'
 import { nanoid } from 'nanoid'
-import { useContext } from 'react'
 import UpdateForm from './form/UpdateForm'
+import Cost from './Cost'
 
 const DataTable = () => {
     const baseURL = "https://my-project-fake-api.herokuapp.com/expensedata"
 
-    // const {expenseData} = useContext()
     const [expenses, setExpenses] = useState([])
-    // setExpenses(expenseData)
 
     const initialState = {
         showForm:false,
@@ -77,15 +75,17 @@ const DataTable = () => {
 
     const setDataToStorage = (expense) =>{
         localStorage.setItem("expense" , JSON.stringify(expense))
-        console.log(expense)
         updateForm()
     } 
-
-
+    
   return (
     <>
         {state.showForm && <Form closeForm = {closeForm} addData ={addData} />}
-        {state.showUpdateForm &&  <UpdateForm closeUpdateForm={closeUpdateForm} />}
+        {state.showUpdateForm &&  <UpdateForm 
+         closeUpdateForm={closeUpdateForm}
+         expenses ={expenses} 
+         setExpenses ={setExpenses }
+         /> }
          <section className='containerWrapper'>
 
             <div className='addBtnWrapper'>
@@ -95,6 +95,7 @@ const DataTable = () => {
                     <Plus />
                 </button>
             </div>
+            <Cost  expenses={expenses} setExpenses={setExpenses}/>
 
                 <table className="table table-hover">
                     <caption>

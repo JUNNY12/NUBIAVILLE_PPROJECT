@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Nav = () => {
@@ -7,10 +6,10 @@ const Nav = () => {
         <div className='logoName'>Expense Manager</div>
         <div className='profileLogout'>
            <Link to={`/profile`}>
-                <button className='profile' role={`button`}>Profile</button>
+                <button className='profile'>Profile</button>
            </Link>
             <Link to={`/`}> 
-                <button className='logout' role={`button`}>Logout</button>
+                <button className='logout'>Logout</button>
             </Link>
         </div>
 

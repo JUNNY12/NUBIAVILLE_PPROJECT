@@ -13,7 +13,6 @@ const Home = () => {
        <div className='tableResponsive pe-4 ps-5 mt-5 mb-5'>
           <DataTable />
        </div>
-        <Cost />
     </div>
     </>
   )

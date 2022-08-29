@@ -10,7 +10,7 @@ const Profile = () => {
               <Link className='link' to={`/home`}><BackArrow /></Link>
           </div>
             <div className="imageContainer">
-                <img src={profileImage} />
+                <img src={profileImage} alt="Profile User"/>
             </div>
 
             <div className="name">
