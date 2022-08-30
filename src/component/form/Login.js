@@ -44,7 +44,7 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
 
            <div className='mb-3'>
-               <label>UserName</label> <br />
+               <label>Username</label> <br />
                <input
                className='loginInput'
                name='userName'
