@@ -13,7 +13,7 @@
 
 * App can be install 
 
-## Stack
+## Tools Used
 * JavaScript
 * React
 * REACT BOOSTRAP
@@ -21,6 +21,8 @@
     * [Github Repo](https://github.com/JUNNY12/my-project-fake-api)
     * [Deployed Link](https://my-project-fake-api.herokuapp.com/)
 * Hosted on Netlify 
+* Font Awesome Icons
+* Google fonts
 
 ## Available Scripts
 
