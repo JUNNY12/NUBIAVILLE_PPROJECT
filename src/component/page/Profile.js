@@ -31,7 +31,7 @@ const Profile = () => {
                 <span className='me-2 fs-3 fw-bold'>Location:</span>
                 <span className='fs-5'>No 302, Aromire, Ikeja Lagos, Nigeria</span>
             </div>
-            <div className='text-center mt-3'>
+            <div className='text-center connect'>
                 <h3 className="mb-3">Connect With Me</h3>
 
                 <div className='d-flex justify-content-center align-items-center socialIcon'>
