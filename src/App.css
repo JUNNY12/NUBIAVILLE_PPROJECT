@@ -411,6 +411,10 @@ label {
     height: 1.5em;
   }
 
+  .logoName{
+    font-size: 1.1em;
+  }
+
   .profile{
     margin-right: 3em;
     transform: scale(1.5);
