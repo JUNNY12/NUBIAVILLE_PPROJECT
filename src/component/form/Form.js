@@ -70,14 +70,18 @@ const Form = ({ closeForm, addData }) => {
 
         <div className="inputWrapper">
           <label>Status</label> <br />
-          <input
-            name="status"
-            className="input"
-            type={`text`}
-            value={data.status}
-            placeholder="status"
-            onChange={handleChange}
-          />
+          <select 
+           name="status"
+           className="input"
+           type={`text`}
+           value={data.status}
+           placeholder="status"
+           onChange={handleChange}
+          >
+              <option >New </option>
+              <option>Inprogress</option>
+              <option>Completed</option>
+          </select>
         </div>
 
         <div className="inputWrapper">
