@@ -11,6 +11,29 @@
   box-sizing: border-box;
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #161515;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+
 .navWrapper {
   background: var(--primary-color);
   display: flex;
