@@ -5,18 +5,15 @@ import Home from "./page/Home"
 import { Routes, Route } from 'react-router-dom';
 import Login from "./form/Login";
 import Profile from "./page/Profile"
-import { ExpenseProvider } from './context/ExpenseContext';
 
 const App = () => {
   return (
     <>
-     <ExpenseProvider >
       <Routes>
           <Route path='/' element={<Login />} />
           <Route path='/home' element ={<Home />} />
           <Route path='/profile' element= {<Profile />} />
-        </Routes>  
-     </ExpenseProvider>
+      </Routes>  
     </>
   )
 }

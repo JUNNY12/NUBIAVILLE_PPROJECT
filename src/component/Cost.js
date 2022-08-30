@@ -7,7 +7,6 @@ const Cost = ({ expenses }) => {
     const sum = expenses?.reduce((accumulator, expense) => {
       return accumulator + Number(expense.total);
     }, 0);
-    console.log(sum);
     setTotalPrice(sum);
   }, [expenses]);
 

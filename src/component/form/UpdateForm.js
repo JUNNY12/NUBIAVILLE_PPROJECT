@@ -16,7 +16,6 @@ const UpdateForm = ({ closeUpdateForm, expenses, setExpenses }) => {
   useEffect(() => {
     const getData = localStorage.getItem("expense");
     const newData = JSON.parse(getData);
-    console.log(newData);
     setData({
       id: newData.id,
       date: newData.date,

@@ -19,19 +19,6 @@ export function ExpenseProvider({children}){
         getExpenses()
     }, [data])
 
-    useEffect(() => {
-  const getData = async () => {
-    const response = await axios.get(baseURL)
-    const expenseResponse = response.data
-    const sum = expenseResponse.reduce((accumulator, expense) => {
-      return accumulator + Number(expense.total)
-    }, 0)
-    
-    setTotalSum(sum)
-}
-  getData()
-}, [data])
-
     
         return(
             <ExpenseContext.Provider value={{data, totalSum}}>

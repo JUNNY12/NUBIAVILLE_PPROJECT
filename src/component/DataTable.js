@@ -49,7 +49,6 @@ const DataTable = () => {
     }, [])
 
     const addData = async(data) => {
-        console.log(data)
         const request = {
             id:nanoid(),
             ...data
@@ -77,7 +76,7 @@ const DataTable = () => {
         localStorage.setItem("expense" , JSON.stringify(expense))
         updateForm()
     } 
-    
+
   return (
     <>
         {state.showForm && <Form closeForm = {closeForm} addData ={addData} />}
@@ -95,19 +94,17 @@ const DataTable = () => {
                     <Plus />
                 </button>
             </div>
-            <Cost  expenses={expenses} setExpenses={setExpenses}/>
+            <div className='mt-5 ps-3 mb-2'>
+                <input
+                className='search'
+                type={`search`}
+                placeholder="Search expenses"
+                onChange={(e) => setQuery(e.target.value)}
+                />
+            </div>
 
+            <div className='table-responsive pe-3 ps-3 mt-5 mb-5'>
                 <table className="table table-hover">
-                    <caption>
-                        <div className='mt-5 ps-5 mb-2'>
-                            <input
-                            className='search'
-                            type={`search`}
-                            placeholder="Search"
-                            onChange={(e) => setQuery(e.target.value)}
-                            />
-                        </div>
-                    </caption>
                     <thead>
                         <tr id="tr">
                         <th scope="col">Date</th>
@@ -149,9 +146,12 @@ const DataTable = () => {
 
                     </tbody>
                 </table>
-                 {!expenses?.length >0 && <div className='text-center fs-3' >Your Record is Empty</div>}
-
-</section>
+            </div>
+            {!expenses?.length >0 && <div className='text-center fs-3' >Your Record is Empty</div>}
+            <div className='ps-3'>
+                <Cost  expenses={expenses} setExpenses={setExpenses}/>
+            </div>      
+        </section>
     
     </>
   )
