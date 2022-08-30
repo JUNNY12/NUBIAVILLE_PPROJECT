@@ -9,8 +9,6 @@
 
 * User can search for Expenses
 
-* App works offline
-
 * App can be install 
 
 ## Tools Used
