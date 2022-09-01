@@ -67,9 +67,9 @@ html{
 }
 
 .addBtnWrapper {
-  position: absolute;
+  position: fixed;
   bottom: 2.5em;
-  right: 1em;
+  right: 0.8em;
 }
 
 .addBtn {
@@ -180,7 +180,6 @@ label {
   outline: none;
   width: 18em;
   height: 2.5em;
-  text-transform: lowercase;
 }
 
 .search:focus {

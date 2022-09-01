@@ -69,7 +69,7 @@ const DataTable = () => {
     const [query, setQuery] = useState('')
     const keys = ['date', 'merchant', 'total' , 'status' , 'comment']
         const newSearch = expenses?.filter((expense) =>
-        keys.some((key) =>expense[key].toLowerCase().includes(query)) 
+        keys.some((key) =>expense[key].toLowerCase().includes(query.toLocaleLowerCase())) 
         )
 
     const setDataToStorage = (expense) =>{
