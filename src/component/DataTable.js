@@ -79,12 +79,7 @@ const DataTable = () => {
 
   return (
     <>
-        {state.showForm && <Form closeForm = {closeForm} addData ={addData} />}
-        {state.showUpdateForm &&  <UpdateForm 
-         closeUpdateForm={closeUpdateForm}
-         expenses ={expenses} 
-         setExpenses ={setExpenses }
-         /> }
+       
          <section className='containerWrapper'>
 
             <div className='addBtnWrapper'>
@@ -104,6 +99,12 @@ const DataTable = () => {
             </div>
 
             <div className='table-responsive pe-3 ps-3 mt-5 mb-5'>
+            {state.showForm && <Form closeForm = {closeForm} addData ={addData} />}
+        {state.showUpdateForm &&  <UpdateForm 
+         closeUpdateForm={closeUpdateForm}
+         expenses ={expenses} 
+         setExpenses ={setExpenses }
+         /> }
                 <table className="table table-hover">
                     <thead>
                         <tr id="tr">
