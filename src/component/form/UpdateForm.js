@@ -11,6 +11,7 @@ const UpdateForm = ({ closeUpdateForm, expenses, setExpenses }) => {
     total: "",
     status: "",
     comment: "",
+    receipt:""
   });
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const UpdateForm = ({ closeUpdateForm, expenses, setExpenses }) => {
       total: newData.total,
       status: newData.status,
       comment: newData.comment,
+      receipt:newData.receipt,
     });
   }, []);
 
@@ -47,75 +49,96 @@ const UpdateForm = ({ closeUpdateForm, expenses, setExpenses }) => {
   };
 
   return (
-    <div className="formWrapper">
+    <div className="formWrapper table-responsive">
       {
         <div className="closeBtn" onClick={() => closeUpdateForm()}>
           X
         </div>
       }
       <form onSubmit={UpdateData}>
-        <div className="inputWrapper">
-          <label>Date</label> <br />
-          <input
-            className="input"
-            name="date"
-            type={`date`}
-            value={data.date}
-            onChange={handleChange}
-          />
+         <div className="formContainer">
+         <div>
+            <div className="inputWrapper">
+            <label>Date</label> <br />
+            <input
+              className="input"
+              name="date"
+              type={`date`}
+              value={data.date}
+              onChange={handleChange}
+            />
+            </div>
+
+            <div className="inputWrapper">
+              <label>Merchant</label> <br />
+              <input
+                name="merchant"
+                type={`text`}
+                className="input"
+                value={data.merchant}
+                onChange={handleChange}
+                placeholder="merchant"
+              />
+            </div>
+
+            <div className="inputWrapper">
+              <label>Total</label> <br />
+              <input
+                name="total"
+                className="input"
+                type={`number`}
+                value={data.total}
+                placeholder="total"
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="inputWrapper">
+              <label>Status</label> <br />
+              <select 
+              name="status"
+              className="input"
+              type={`text`}
+              value={data.status}
+              placeholder="status"
+              onChange={handleChange}
+              >
+                  <option >New </option>
+                  <option>Inprogress</option>
+                  <option>Completed</option>
+              </select>
+            </div>
+
+            <div className="inputWrapper">
+              <label>Comment</label> <br />
+              <textarea
+                name="comment"
+                className="input"
+                type={`text`}
+                value={data.comment}
+                onChange={handleChange}
+              />
+            </div>
+         </div>
+         <div>
+          <div className="inputWrapper">
+            <label>Upload Receipt</label> <br />
+            <input
+              name="merchant"
+              type={`file`}
+              value=""
+              className="input"
+            />
+          </div>
+
+          <div className="receiptContainer">
+            <img src={data.receipt} alt={data.merchant} />
+          </div>
         </div>
 
-        <div className="inputWrapper">
-          <label>Merchant</label> <br />
-          <input
-            name="merchant"
-            type={`text`}
-            className="input"
-            value={data.merchant}
-            onChange={handleChange}
-            placeholder="merchant"
-          />
-        </div>
+         </div>
 
-        <div className="inputWrapper">
-          <label>Total</label> <br />
-          <input
-            name="total"
-            className="input"
-            type={`number`}
-            value={data.total}
-            placeholder="total"
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="inputWrapper">
-          <label>Status</label> <br />
-          <select 
-           name="status"
-           className="input"
-           type={`text`}
-           value={data.status}
-           placeholder="status"
-           onChange={handleChange}
-          >
-              <option >New </option>
-              <option>Inprogress</option>
-              <option>Completed</option>
-          </select>
-        </div>
-
-        <div className="inputWrapper">
-          <label>Comment</label> <br />
-          <textarea
-            name="comment"
-            className="input"
-            type={`text`}
-            value={data.comment}
-            onChange={handleChange}
-          />
-        </div>
-        <button className="submit">Update</button>
+         <button className="submit">Update</button>
       </form>
     </div>
   );

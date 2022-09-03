@@ -7,6 +7,8 @@ import axios from 'axios'
 import { nanoid } from 'nanoid'
 import UpdateForm from './form/UpdateForm'
 import Cost from './Cost'
+import Filter from './Filter'
+import { filterReducer } from './filterReducer'
 
 const DataTable = () => {
     const baseURL = "https://my-project-fake-api.herokuapp.com/expensedata"
@@ -66,45 +68,131 @@ const DataTable = () => {
         setExpenses(newData)
     }
 
-    const [query, setQuery] = useState('')
-    const keys = ['date', 'merchant', 'total' , 'status' , 'comment']
-        const newSearch = expenses?.filter((expense) =>
-        keys.some((key) =>expense[key].toLowerCase().includes(query.toLocaleLowerCase())) 
-        )
-
     const setDataToStorage = (expense) =>{
         localStorage.setItem("expense" , JSON.stringify(expense))
         updateForm()
     } 
 
-  return (
-    <>
+
+    const [expenseState, expenseDispatch] = useReducer(filterReducer, {
+        newExpenses:expenses,
+        isNew:false,
+        isCompleted:false,
+        isInprogress:false,
+        searchQuery:"",
+        minimumPrice:"",
+        maximumPrice:"",
+        fromDate:"",
+        toDate:"",
+        merchant:""
+    })
+
+    const transformedExpenses = () => {
+        let sortedExpenses= expenses
+
+        if(expenseState.isNew){
+            sortedExpenses = sortedExpenses.filter((expense) => expense.status === "New")
+        }
+        else if (expenseState.isCompleted){
+            sortedExpenses = sortedExpenses.filter((expense) => expense.status === "Completed")
+        }
+
+        else if(expenseState.isInprogress){
+            sortedExpenses =sortedExpenses.filter((expense) => expense.status === "Inprogress")
+        }
+        else if(expenseState.searchQuery){
+            const keys = ['date', 'merchant', 'total' , 'status' , 'comment']
+            sortedExpenses = sortedExpenses.filter((expense) =>
+            keys.some((key) =>expense[key].toLowerCase().includes(expenseState.searchQuery.toLowerCase())) 
+            )
+        }
+        else if(expenseState.merchant){
+            sortedExpenses = sortedExpenses.filter((expense) => expense.merchant === expenseState.merchant )
+        } 
        
-         <section className='containerWrapper'>
+        else if (expenseState.fromDate){
+            sortedExpenses = sortedExpenses.filter((expense) => {
+                return new Date(expense.date).getTime() >= new Date(expenseState.fromDate).getTime()
+            })
+        }
+        else if (expenseState.toDate){
+            sortedExpenses = sortedExpenses.filter((expense) => {
+                return new Date(expense.date).getTime() >= new Date(expenseState.toDate).getTime()
+            })
+        }
 
-            <div className='addBtnWrapper'>
-                <button 
-                onClick={() => addExpense()}
-                className='addBtn'>
-                    <Plus />
-                </button>
-            </div>
-            <div className='mt-5 ps-3 mb-2'>
-                <input
-                className='search'
-                type={`search`}
-                placeholder="Search expenses"
-                onChange={(e) => setQuery(e.target.value)}
-                />
-            </div>
+         else if (expenseState.fromDate && expenseState.toDate){
+            sortedExpenses = sortedExpenses.filter((expense) => {
+                return  new Date(expense.date).getTime() >= new Date(expenseState.fromDate).getTime() &&
+                new Date(expense.date).getTime() <=  new Date(expenseState.toDate).getTime()
+            })
+        }
+        else if (expenseState.minimumPrice ){
+            sortedExpenses = sortedExpenses.filter((expense) => {
+                return Number(expense.total) >= expenseState.minimumPrice
+            })
+        }
 
-            <div className='table-responsive pe-3 ps-3 mt-5 mb-5'>
-            {state.showForm && <Form closeForm = {closeForm} addData ={addData} />}
+        else if (expenseState.maximumPrice ){
+            sortedExpenses = sortedExpenses.filter((expense) => {
+                return Number(expense.total) <= expenseState.maximumPrice
+            })
+        }
+
+        else if (expenseState.minimumPrice && expenseState.maximumPrice){
+            sortedExpenses = sortedExpenses.filter((expense) => {
+                return Number(expense.total) > expenseState.minimumPrice &&
+                Number(expense.total) < expenseState.maximumPrice
+            })
+        }
+
+        else{
+            <div>No Record found</div>
+        }
+
+        return sortedExpenses
+    }
+
+  return (
+    <div className='wrapper'>
+        {state.showForm && <Form closeForm = {closeForm} addData ={addData} />}
         {state.showUpdateForm &&  <UpdateForm 
          closeUpdateForm={closeUpdateForm}
          expenses ={expenses} 
          setExpenses ={setExpenses }
          /> }
+         <div>
+             <Filter
+              expenses={expenses}
+              expenseState={expenseState} 
+              expenseDispatch={expenseDispatch} 
+              />
+         </div>
+
+         <section className='containerWrapper table-responsive pe-3 ps-3 mt-5 mb-5'>
+
+            <div className='mt-3 ps-3 mb-2'>
+                <input
+                className='search'
+                type={`search`}
+                placeholder="Search expenses"
+                onChange={ (e) => 
+                    expenseDispatch({
+                      type:"FILTER_SEARCH",
+                      payload:e.target.value
+                    })
+                    }
+                />
+            </div>
+
+            <div className='tableContainer'>
+                <div className='addBtnWrapper'>
+                    <button 
+                    onClick={() => addExpense()}
+                    className='addBtn'>
+                        <Plus />
+                    </button>
+                </div>
                 <table className="table table-hover">
                     <thead>
                         <tr id="tr">
@@ -118,7 +206,7 @@ const DataTable = () => {
                     </thead>
                     <tbody>
                         {
-                            newSearch?.reverse().map((expense) => {
+                            transformedExpenses().reverse().map((expense) => {
                                 return(
                                     <tr key={nanoid()}>
                                     <td>{expense.date}</td>
@@ -149,12 +237,12 @@ const DataTable = () => {
                 </table>
             </div>
             {!expenses?.length >0 && <div className='text-center fs-3' >Your Record is Empty</div>}
-            <div className='ps-3'>
+            <div className='ps-3 pb-5'>
                 <Cost  expenses={expenses} setExpenses={setExpenses}/>
             </div>      
         </section>
     
-    </>
+    </div>
   )
 }
 
