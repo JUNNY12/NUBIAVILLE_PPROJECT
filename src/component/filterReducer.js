@@ -2,21 +2,11 @@
 
 export const filterReducer = (expenseState, action) => {
     switch (action.type) {
-        case "FILTER_COMPLETED":
+     
+        case "FILTER_STATUS":
             return{
                 ...expenseState,
-                isCompleted:!expenseState.isCompleted
-            }
-        
-         case "FILTER_NEW":
-            return{
-                ...expenseState,
-                isNew:!expenseState.isNew
-                }
-        case "FILTER_INPROGRESS":
-            return{
-                ...expenseState,
-                isInprogress:!expenseState.isInprogress
+                statusFilterBy: action.payload
                 }
         case "FILTER_SEARCH":
             return{
@@ -54,9 +44,7 @@ export const filterReducer = (expenseState, action) => {
 
         case "CLEAR_FILTERS":
             return{
-                isNew:false,
-                isCompleted:false,
-                isInprogress:false,
+                statusFilterBy:"",
                 searchQuery:"",
                 minimumPrice:"",
                 maximumPrice:"",

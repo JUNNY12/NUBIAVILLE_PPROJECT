@@ -205,7 +205,6 @@ label {
   align-items: center;
   flex-direction: column;
   border-radius: 8px;
-  width: 100%;
 }
 
 .formContainer{
@@ -501,7 +500,19 @@ label {
     grid-template-columns: 1fr;
   }
 
+  .formContainer{
+    grid-template-columns: 1fr;
+  }
  
+  .receiptContainer{
+    height: 6em;
+    width: 6em;
+    padding-bottom: 1em;
+  }
+
+  .closeBtn{
+    top: 0.7em;
+  }
 
 
   .name {

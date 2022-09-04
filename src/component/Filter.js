@@ -1,14 +1,25 @@
 import React from 'react'
 import {useState} from "react"
 import {BiDownArrow} from "react-icons/bi"
+import { useEffect } from 'react'
 
 const Filter = ({expenseState, expenseDispatch , expenses}) => {
 
     const [show, setShow] = useState(false)
+    const [filter, setFilter] = useState([])
 
-    console.log(expenseState)
-    const {isNew, isCompleted, isInprogress} = expenseState
-    console.log(isNew, isCompleted, isInprogress)
+
+    
+    useEffect(() => {
+        console.log(expenses)
+      expenses.forEach((expense) => {
+          console.log(expense.merchant)
+        if(!filter.includes(expense.merchant)) {
+            setFilter((prevState) => [...prevState, expense.merchant])
+            console.log(expense.merchant)
+         }
+      })
+    }, [expenses])
     
   return (
     <div className='filter px-3 py-3'>
@@ -27,11 +38,10 @@ const Filter = ({expenseState, expenseDispatch , expenses}) => {
                    type={`radio`}
                    name="status"
                    className='me-3'
-                   checked={isCompleted}
                    onChange ={ () => 
                        expenseDispatch({
-                           type:"FILTER_COMPLETED",
-                           payload:expenses
+                           type:"FILTER_STATUS",
+                           payload:"Completed"
                        })
                        }
                    />
@@ -43,11 +53,10 @@ const Filter = ({expenseState, expenseDispatch , expenses}) => {
                    className='me-3' 
                    type={`radio`}
                    name="status"
-                   checked={isInprogress}
                    onChange ={ () => 
                        expenseDispatch({
-                           type:"FILTER_INPROGRESS",
-                           payload:expenses
+                           type:"FILTER_STATUS",
+                           payload:"Inprogress"
                        })
                        }
                    />
@@ -59,11 +68,10 @@ const Filter = ({expenseState, expenseDispatch , expenses}) => {
                    className='me-3'
                    name="status"
                    type={`radio`}
-                   checked={isNew}
                    onChange ={ () => 
                        expenseDispatch({
-                           type:"FILTER_NEW",
-                           payload:expenses
+                           type:"FILTER_STATUS",
+                           payload:"New"
                        })
                        }
                    />
@@ -147,7 +155,9 @@ const Filter = ({expenseState, expenseDispatch , expenses}) => {
                        }
                    >
                        <option selected></option>
-                       {expenses.map((expense) => <option>{expense.merchant}</option>)}
+                       {
+                           filter.map((expense) => <option>{expense}</option>)
+                       }
                    </select>
                 </div>
 

@@ -75,10 +75,10 @@ const DataTable = () => {
 
 
     const [expenseState, expenseDispatch] = useReducer(filterReducer, {
-        newExpenses:expenses,
-        isNew:false,
-        isCompleted:false,
-        isInprogress:false,
+        // isNew:false,
+        // isCompleted:false,
+        // isInprogress:false,
+        statusFilterBy:"",
         searchQuery:"",
         minimumPrice:"",
         maximumPrice:"",
@@ -87,19 +87,27 @@ const DataTable = () => {
         merchant:""
     })
 
+
     const transformedExpenses = () => {
+
         let sortedExpenses= expenses
 
-        if(expenseState.isNew){
-            sortedExpenses = sortedExpenses.filter((expense) => expense.status === "New")
-        }
-        else if (expenseState.isCompleted){
-            sortedExpenses = sortedExpenses.filter((expense) => expense.status === "Completed")
+        if (expenseState.statusFilterBy === "Completed"){
+
+            const completed = expenses.filter((expense) => expense.status === "Completed")
+            sortedExpenses = completed
         }
 
-        else if(expenseState.isInprogress){
-            sortedExpenses =sortedExpenses.filter((expense) => expense.status === "Inprogress")
+        else if (expenseState.statusFilterBy === "New"){
+         const newFilter=  sortedExpenses.filter((expense) => expense.status === "New")
+            sortedExpenses = newFilter
         }
+
+        else if (expenseState.statusFilterBy === "Inprogress"){
+            const inprogress = sortedExpenses.filter((expense) => expense.status === "Inprogress")
+            sortedExpenses = inprogress
+        }
+
         else if(expenseState.searchQuery){
             const keys = ['date', 'merchant', 'total' , 'status' , 'comment']
             sortedExpenses = sortedExpenses.filter((expense) =>
@@ -109,45 +117,21 @@ const DataTable = () => {
         else if(expenseState.merchant){
             sortedExpenses = sortedExpenses.filter((expense) => expense.merchant === expenseState.merchant )
         } 
-       
-        else if (expenseState.fromDate){
-            sortedExpenses = sortedExpenses.filter((expense) => {
-                return new Date(expense.date).getTime() >= new Date(expenseState.fromDate).getTime()
-            })
-        }
-        else if (expenseState.toDate){
-            sortedExpenses = sortedExpenses.filter((expense) => {
-                return new Date(expense.date).getTime() >= new Date(expenseState.toDate).getTime()
-            })
-        }
 
-         else if (expenseState.fromDate && expenseState.toDate){
-            sortedExpenses = sortedExpenses.filter((expense) => {
+         else if (expenseState.fromDate || expenseState.toDate){
+            const sortByDate = sortedExpenses.filter((expense) => {
                 return  new Date(expense.date).getTime() >= new Date(expenseState.fromDate).getTime() &&
                 new Date(expense.date).getTime() <=  new Date(expenseState.toDate).getTime()
             })
-        }
-        else if (expenseState.minimumPrice ){
-            sortedExpenses = sortedExpenses.filter((expense) => {
-                return Number(expense.total) >= expenseState.minimumPrice
-            })
+            sortedExpenses= sortByDate
         }
 
-        else if (expenseState.maximumPrice ){
-            sortedExpenses = sortedExpenses.filter((expense) => {
-                return Number(expense.total) <= expenseState.maximumPrice
+        else if (expenseState.minimumPrice || expenseState.maximumPrice){
+            const maxMin = sortedExpenses.filter((expense) => {
+                return Number(expense.total) >= Number(expenseState.minimumPrice) &&
+                Number(expense.total) <= Number(expenseState.maximumPrice)
             })
-        }
-
-        else if (expenseState.minimumPrice && expenseState.maximumPrice){
-            sortedExpenses = sortedExpenses.filter((expense) => {
-                return Number(expense.total) > expenseState.minimumPrice &&
-                Number(expense.total) < expenseState.maximumPrice
-            })
-        }
-
-        else{
-            <div>No Record found</div>
+            sortedExpenses = maxMin
         }
 
         return sortedExpenses

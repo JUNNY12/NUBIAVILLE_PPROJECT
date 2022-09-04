@@ -30,23 +30,23 @@ const Cost = ({ expenses }) => {
   return (
     <section className="mt-5">
       <div>
-        <span className="me-3 fs-4">Completed Amount:</span>
-        <span className="fs-4">${completed}</span>
+        <span className="me-3 fs-6">Completed Amount:</span>
+        <span className="fs-6 fw-bold">${completed}</span>
       </div>
 
       <div>
-        <span className="me-3 fs-4">Inprogress Amount:</span>
-        <span className="fs-4">${inProg}</span>
+        <span className="me-3 fs-6">Inprogress Amount:</span>
+        <span className="fs-6 fw-bold">${inProg}</span>
       </div>
 
       <div>
-        <span className="me-3 fs-4">New Amount:</span>
-        <span className="fs-4">${newExp}</span>
+        <span className="me-3 fs-6">New Amount:</span>
+        <span className="fs-6 fw-bold">${newExp}</span>
       </div>
 
       <div>
-        <span className="me-3 fs-4">Total Amount:</span>
-        <span className="fs-4">${totalPrice}</span>
+        <span className="me-3 fs-6">Total Amount:</span>
+        <span className="fs-6 fw-bold">${totalPrice}</span>
       </div>
      
     </section>

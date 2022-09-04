@@ -98,7 +98,6 @@ const Form = ({ closeForm, addData }) => {
                 onChange={handleChange}
               />
             </div>
-            <button className="submit">Submit</button>
          </div>
         
           <div className="inputWrapper">
@@ -109,6 +108,7 @@ const Form = ({ closeForm, addData }) => {
             />
           </div>
         </div>
+        <button className="submit">Submit</button>
       </form>
     </div>
   );
